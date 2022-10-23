@@ -34,13 +34,16 @@ func (gen *Generate) GetRentalsAndDelete() error {
 		log.Print(err)
 		return err
 	}
-	reqBodyBytes := new(bytes.Buffer)
-	json.NewEncoder(reqBodyBytes).Encode(rentals)
 
-	err = gen.RabbitMq.Publish(reqBodyBytes.Bytes())
-	if err != nil {
-		log.Print(err)
-		return err
+	for _, rental := range rentals {
+		reqBodyBytes := new(bytes.Buffer)
+		json.NewEncoder(reqBodyBytes).Encode(rental)
+
+		err = gen.RabbitMq.Publish(reqBodyBytes.Bytes())
+		if err != nil {
+			log.Print(err)
+			return err
+		}
 	}
 	return nil
 }
