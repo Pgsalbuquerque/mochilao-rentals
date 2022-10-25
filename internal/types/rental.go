@@ -1,7 +1,8 @@
 package types
 
 type Rental struct {
-	Fields Fields `json:"fields"`
+	Fields   Fields   `json:"fields"`
+	Geometry Geometry `json:"geometry"`
 }
 
 type Fields struct {
@@ -12,4 +13,8 @@ type Fields struct {
 	Description string  `json:"description"`
 	Price       float64 `json:"price"`
 	Street      string  `json:"street"`
+}
+
+type Geometry struct {
+	Coordinates []float64 `json:"coordinates"`
 }

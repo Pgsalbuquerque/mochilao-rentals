@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"log"
+	"math/rand"
 	"mochilao-rentals/internal/types"
 )
 
@@ -35,7 +36,12 @@ func (gen *Generate) GetRentalsAndDelete() error {
 		return err
 	}
 
-	for _, rental := range rentals {
+	for idx, rental := range rentals {
+		if idx == 2 {
+			cities := []string{"Roma", "Paris", "Londres"}
+			indx := rand.Intn(3)
+			rental.Fields.City = cities[indx]
+		}
 		reqBodyBytes := new(bytes.Buffer)
 		json.NewEncoder(reqBodyBytes).Encode(rental)
 
